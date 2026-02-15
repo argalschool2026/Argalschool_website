@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argal Secondary School</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base Styles */
+        body { font-family: 'Roboto', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        
+        /* Blogger Specific Overrides (Hide Default Blogger UI) */
+        .navbar, .blog-pager, .post-footer, .sidebar, .footer-outer, .comments, .date-header { display: none !important; }
+        .post-body { padding: 0 !important; margin: 0 !important; }
+        
+        /* Sticky Header Offset */
+        html { scroll-padding-top: 100px; }
+        
+        /* Animations */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { display: inline-flex; animation: marquee 40s linear infinite; }
+        .marquee-container:hover .animate-marquee { animation-play-state: paused; }
+        
+        @keyframes swing { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } }
+        .animate-swing { animation: swing 2s ease-in-out infinite; }
+        
+        /* Utility */
+        .glass-nav { background-color: rgba(15, 23, 42, 0.9); backdrop-filter: blur(4px); }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Flip Card Utilities (Fallback if Tailwind arbitary values glitch in older browsers) */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        /* Stars Background */
+        .stars-container { background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: var(--opacity); }
+        @keyframes twinkle { 0% { transform: scale(1); opacity: var(--opacity); } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(1); opacity: var(--opacity); } }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Universe Background -->
+    <div id="universe-bg" class="stars-container"></div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-nav text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 max-w-[60%] md:max-w-[30%]">
+                    <i data-lucide="graduation-cap" class="h-8 w-8 text-blue-300 shrink-0"></i>
+                    <span class="font-bold text-lg md:text-xl tracking-wide truncate" id="nav-school-name">Argal Secondary School</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden xl:flex items-center space-x-1" id="desktop-menu">
+                    <!-- Links injected by JS -->
+                </div>
+
+                <!-- Mobile Controls -->
+                <div class="xl:hidden flex items-center gap-2">
+                    <button id="lang-toggle-mobile" class="bg-blue-700 hover:bg-blue-600 px-2 py-1 rounded text-xs font-bold">NP</button>
+                    <button id="mobile-menu-btn" class="p-2 rounded text-gray-200 hover:bg-blue-800">
+                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-slate-800 border-t border-slate-700">
+            <div class="px-2 pt-2 pb-3 space-y-1" id="mobile-menu-links">
+                <!-- Links injected by JS -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notice Bar -->
+    <div class="bg-white border-b border-slate-200 h-12 relative z-40 shadow-sm flex items-center">
+        <div class="bg-blue-700 h-full px-4 flex items-center justify-center z-10 text-white relative shrink-0">
+            <i data-lucide="bell" class="w-4 h-4 mr-2 text-yellow-400 animate-swing"></i>
+            <span class="font-bold text-xs uppercase tracking-wider" data-t="common.noticeTitle">NOTICE</span>
+            <!-- Triangle arrow -->
+            <div class="hidden md:block absolute top-0 -right-4 w-0 h-0 border-t-[48px] border-t-blue-700 border-r-[20px] border-r-transparent"></div>
+        </div>
+        <div class="flex-1 overflow-hidden h-full flex items-center bg-slate-50 marquee-container">
+            <div class="animate-marquee whitespace-nowrap flex items-center" id="marquee-content">
+                <!-- Notices injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content" class="min-h-screen">
+        
+        <!-- === HOME VIEW === -->
+        <div id="view-home">
+            <!-- Hero -->
+            <section id="home" class="relative h-[500px] bg-slate-900 flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 opacity-40">
+                    <img src="https://picsum.photos/1920/1080?blur=2" class="w-full h-full object-cover">
+                </div>
+                <div class="relative z-10 text-center px-4 max-w-4xl mx-auto text-white">
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg" data-t="hero.title">Welcome</h1>
+                    <div class="flex items-center justify-center gap-2 text-blue-200 text-lg mb-8">
+                        <i data-lucide="map-pin" class="h-5 w-5"></i>
+                        <span id="hero-address">Tarakhola, Baglung</span>
+                    </div>
+                    <p class="text-lg max-w-2xl mx-auto mb-8 drop-shadow-md" data-t="hero.subtitle">Empowering future generations.</p>
+                    <a href="#news" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105 inline-block" data-t="hero.cta">View News</a>
+                </div>
+            </section>
+
+            <!-- History -->
+            <section id="history" class="py-16 bg-white">
+                <div class="max-w-5xl mx-auto px-4 text-center">
+                    <div class="inline-flex p-3 bg-blue-100 rounded-full mb-4"><i data-lucide="history" class="h-8 w-8 text-blue-600"></i></div>
+                    <h2 class="text-3xl font-bold uppercase tracking-wide border-b-4 border-blue-600 inline-block pb-2 mb-4" data-t="sectionTitles.history">History</h2>
+                    <p class="text-xl text-gray-600 italic mb-8" id="history-subtitle"></p>
+                    <div class="bg-slate-50 p-8 rounded-2xl shadow-sm text-left prose prose-lg text-gray-700 mx-auto" id="history-content"></div>
+                </div>
+            </section>
+
+            <!-- Martyrs -->
+            <section id="martyrs" class="py-16 bg-stone-50">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <div class="inline-flex p-3 bg-red-100 rounded-full mb-4"><i data-lucide="flame" class="h-8 w-8 text-red-600 animate-pulse"></i></div>
+                    <h2 class="text-3xl font-bold uppercase tracking-wide border-b-4 border-red-600 inline-block pb-2 mb-10" data-t="sectionTitles.martyrs">Martyrs</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto" id="martyrs-container"></div>
+                </div>
+            </section>
+
+            <!-- Founders -->
+            <section id="founders" class="py-16 bg-slate-100">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.founders">Founders</h2>
+                    <div class="space-y-12" id="founders-container"></div>
+                </div>
+            </section>
+
+            <!-- News -->
+            <section id="news" class="py-16 bg-slate-50">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="flex justify-between items-end mb-12 border-b pb-4">
+                        <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2" data-t="sectionTitles.news">News</h2>
+                        <a href="#" class="hidden md:flex items-center text-blue-600 font-medium" id="news-more-link">See More <i data-lucide="external-link" class="ml-2 w-4 h-4"></i></a>
+                    </div>
+                    <div id="news-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Loaded via JS -->
+                        <div class="col-span-3 text-center py-10"><div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Preview -->
+            <section id="team" class="py-16 bg-blue-50">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.teamPreview">Leadership</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12" id="team-preview-container"></div>
+                </div>
+            </section>
+            
+            <!-- Best Practices -->
+            <section class="py-16 bg-white">
+                 <div class="max-w-7xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold uppercase border-b-4 border-indigo-600 inline-block pb-2 mb-12" data-t="sectionTitles.bestPractices">Best Practices</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center" id="practices-container"></div>
+                 </div>
+            </section>
+
+            <!-- Success Stories -->
+            <section class="py-16 bg-slate-900 text-white">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <div class="inline-flex p-3 bg-blue-600 rounded-full mb-4"><i data-lucide="medal" class="h-8 w-8 text-white"></i></div>
+                    <h2 class="text-3xl font-bold uppercase mb-12" data-t="sectionTitles.successStories">Success Stories</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8" id="success-container"></div>
+                </div>
+            </section>
+
+            <!-- SPLIT SECTION: CREATION CORNER & EX-STUDENTS -->
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+                <!-- Creation Corner -->
+                <section id="creation-corner" class="py-16 bg-stone-50 relative overflow-hidden h-full">
+                    <!-- Decorative background elements -->
+                    <div class="absolute top-0 left-0 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
+                    <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 translate-x-1/2 translate-y-1/2"></div>
+
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center p-3 bg-white rounded-2xl shadow-sm mb-4 transform rotate-3 hover:rotate-6 transition-transform">
+                                <i data-lucide="palette" class="h-8 w-8 text-purple-600"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold text-slate-900 font-serif mb-2 tracking-tight border-b-0 block" data-t="sectionTitles.creationCorner">
+                                Creation Corner
+                            </h2>
+                            <p class="text-base text-slate-600 max-w-2xl mx-auto font-light">
+                                A curated showcase of student creativity.
+                            </p>
+                        </div>
+
+                        <div class="flex justify-center mb-8">
+                            <button onclick="toggleElement('creative-frame-container')" id="creative-btn" class="group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 hover:from-purple-500 hover:via-pink-500 hover:to-red-400 ring-2 ring-purple-400 ring-offset-2">
+                                <i data-lucide="sparkles" class="mr-2 h-5 w-5 animate-pulse"></i> Open Creative Frame
+                            </button>
+                        </div>
+
+                        <div id="creative-frame-container" class="hidden transition-all duration-500 ease-in-out overflow-hidden mb-6">
+                            <div class="w-full max-w-sm mx-auto h-[600px] bg-slate-900 rounded-[2.5rem] p-3 shadow-2xl border-8 border-slate-800 relative">
+                                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-xl z-20"></div>
+                                <div class="h-full w-full bg-white rounded-[2rem] overflow-hidden relative">
+                                    <div class="absolute top-0 left-0 right-0 h-12 bg-slate-100 border-b flex items-center justify-between px-4 text-xs text-gray-500 z-10">
+                                        <div class="flex items-center gap-1">
+                                            <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                            <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                            <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                                        </div>
+                                        <span>argalss.blogspot.com</span>
+                                        <a href="https://argalss.blogspot.com/search/label/Corner?m=1" target="_blank" rel="noopener noreferrer" class="hover:text-purple-600"><i data-lucide="maximize-2" class="w-4 h-4"></i></a>
+                                    </div>
+                                    <iframe src="https://argalss.blogspot.com/search/label/Corner?m=1" class="w-full h-full pt-12 border-0 bg-white" loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="https://argalss.blogspot.com/search/label/Corner?m=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-slate-600 hover:text-purple-600 font-medium transition-colors border-b-2 border-transparent hover:border-purple-600 pb-1 text-sm group">
+                                Browse Full Archive <i data-lucide="external-link" class="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Ex Students -->
+                <section id="ex-students" class="py-16 bg-slate-50 h-full">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center justify-center p-3 bg-blue-100 rounded-full mb-4">
+                                <i data-lucide="users" class="h-8 w-8 text-blue-600"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold text-slate-900 uppercase tracking-wide border-b-4 border-blue-600 inline-block pb-2 block" data-t="sectionTitles.exStudents">Ex Students</h2>
+                            <p class="mt-2 text-gray-600 text-base">Browse our student records archive.</p>
+                        </div>
+                        
+                        <div class="flex justify-center mb-8">
+                            <button onclick="toggleElement('ex-students-frame')" id="ex-students-btn" class="group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-400 hover:from-blue-600 hover:via-cyan-600 hover:to-teal-500 ring-2 ring-cyan-400 ring-offset-2">
+                                <i data-lucide="database" class="mr-2 h-5 w-5 animate-bounce"></i> View Records Archive <i data-lucide="chevron-down" class="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+                            </button>
+                        </div>
+
+                        <div id="ex-students-frame" class="hidden transition-all duration-700 ease-in-out overflow-hidden">
+                            <div class="bg-white p-2 rounded-xl shadow-2xl border border-slate-200 max-w-full mx-auto h-[600px] flex flex-col">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Highlights -->
+            <section class="py-16 bg-white">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                     <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.highlights">Why Us?</h2>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="highlights-container"></div>
+                </div>
+            </section>
+
+            <!-- Donors -->
+            <section id="donors" class="py-16 bg-white">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-10" data-t="sectionTitles.donors">Wall of Honor</h2>
+                    
+                    <!-- Top 10 -->
+                    <div class="mb-10">
+                         <h3 class="text-2xl font-bold mb-8 flex items-center justify-center gap-2"><i data-lucide="star" class="text-yellow-500 fill-yellow-500"></i> Top Contributors <i data-lucide="star" class="text-yellow-500 fill-yellow-500"></i></h3>
+                         <div class="grid grid-cols-2 md:grid-cols-5 gap-6" id="top-donors-container"></div>
+                    </div>
+
+                    <button onclick="toggleElement('donor-sheet')" class="bg-blue-600 text-white px-8 py-3 rounded-full shadow hover:scale-105 transition-transform font-semibold inline-flex items-center gap-2">
+                        <span data-t="common.viewFullList">View Full List</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    
+                    <div id="donor-sheet" class="hidden mt-8 w-full h-[800px] bg-slate-50 rounded-xl overflow-hidden border border-slate-200">
+                        <!-- Iframe injected on click to save bandwidth -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Akshaya Kosh -->
+            <section id="akshaya-kosh" class="py-16 bg-blue-50">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                     <div class="inline-flex p-3 bg-blue-100 rounded-full mb-4"><i data-lucide="landmark" class="h-8 w-8 text-blue-600"></i></div>
+                     <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-10" data-t="sectionTitles.akshayaKosh">Akshaya Kosh</h2>
+                     <div id="funds-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="col-span-3 text-center py-10"><div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Gallery -->
+            <section id="gallery" class="py-16 bg-white">
+                <div class="max-w-full px-4 text-center overflow-hidden">
+                    <div class="inline-flex p-3 bg-blue-100 rounded-full mb-4"><i data-lucide="image" class="h-8 w-8 text-blue-600"></i></div>
+                    <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-10" data-t="sectionTitles.gallery">Gallery</h2>
+                    
+                    <div class="mb-10 relative">
+                        <div class="animate-marquee whitespace-nowrap" id="gallery-marquee"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- === MANAGEMENT VIEW === -->
+        <div id="view-management" class="hidden py-16 bg-slate-50 min-h-screen">
+             <div class="max-w-7xl mx-auto px-4 text-center">
+                 <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.management">Management Committee</h2>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="management-container"></div>
+             </div>
+        </div>
+
+        <!-- === STAFF VIEW === -->
+        <div id="view-staff" class="hidden py-16 bg-slate-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                 <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.staff">Staff</h2>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="staff-container"></div>
+             </div>
+        </div>
+
+        <!-- === EX MANAGEMENT VIEW === -->
+        <div id="view-ex-management" class="hidden py-16 bg-white min-h-screen">
+             <div class="max-w-7xl mx-auto px-4 text-center">
+                 <h2 class="text-3xl font-bold uppercase border-b-4 border-blue-600 inline-block pb-2 mb-12" data-t="sectionTitles.exManagement">Ex-Management</h2>
+                 <div class="space-y-12" id="ex-management-container"></div>
+             </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white pt-12 pb-6 border-t-4 border-blue-800">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <!-- ERIC NEPAL Section -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3">ERIC NEPAL : Design and IT support</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                  ERIC Nepal is a premier IT solution provider specializing in innovative web design, software development, and digital branding tailored for modern educational institutions and businesses.
+                </p>
+                <a href="https://www.ericnepal.youware.app" target="_blank" class="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-semibold transition-colors">
+                  <i data-lucide="globe" class="w-4 h-4 mr-2"></i> Visit Website
+                </a>
+            </div>
+
+             <!-- Important Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3" data-t="footer.importantLinks">Important Links</h3>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li><a href="https://moest.gov.np/" target="_blank" class="hover:text-blue-400 flex items-center"><i data-lucide="external-link" class="w-3 h-3 mr-2"></i> MoEST</a></li>
+                    <li><a href="https://www.neb.gov.np/" target="_blank" class="hover:text-blue-400 flex items-center"><i data-lucide="external-link" class="w-3 h-3 mr-2"></i> NEB</a></li>
+                    <li><a href="https://moecdc.gov.np/" target="_blank" class="hover:text-blue-400 flex items-center"><i data-lucide="external-link" class="w-3 h-3 mr-2"></i> CDC</a></li>
+                    <li><a href="https://cehrd.gov.np/" target="_blank" class="hover:text-blue-400 flex items-center"><i data-lucide="external-link" class="w-3 h-3 mr-2"></i> CEHRD</a></li>
+                    <li><a href="https://www.ero.gov.np/" target="_blank" class="hover:text-blue-400 flex items-center"><i data-lucide="external-link" class="w-3 h-3 mr-2"></i> ERO</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3" data-t="footer.contact">Contact</h3>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-blue-400"></i> Tarakhola, Baglung</li>
+                    <li class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2 text-blue-400"></i> 9800000000</li>
+                </ul>
+            </div>
+
+            <!-- Connect -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3" data-t="footer.connect">Connect</h3>
+                <div class="flex gap-4">
+                    <a href="#" class="bg-slate-800 p-2 rounded-full hover:bg-blue-600"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 pt-6 text-center text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center gap-2">
+            <p>&copy; <span id="year"></span> Argal Secondary School. <span data-t="footer.rights">All rights reserved.</span></p>
+            <p class="flex items-center gap-1">
+                <span data-t="footer.designedBy">Designed by</span> <a href="https://www.ericnepal.youware.app" target="_blank" class="text-blue-400 font-semibold hover:text-blue-300">ERIC Nepal</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ... (Rest of JS Logic is unchanged) ...
+        const BLOG_URLS = {
+          news: "https://argalss.blogspot.com/search/label/News?m=1",
+          creative: "https://argalss.blogspot.com/search/label/Corner?m=1",
+          fund: "https://argalss.blogspot.com/search/label/Fund?m=1",
+          staffSearch: "https://argalss.blogspot.com/search/label/Staff"
+        };
+        const SHEET_URLS = {
+            donors: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_example_donors_sheet_id/pubhtml?widget=true&headers=false",
+            exStudents: "https://argalss.blogspot.com/search/label/student-record?m=1"
+        };
+        
+        const TRANSLATIONS = {
+            en: {
+                nav: { home: 'Home', team: 'Our Team', history: 'History', founders: 'Founders', martyrs: 'Sahid Pana', news: 'News', creationCorner: 'Creation Corner', donors: 'Wall of Honor', akshayaKosh: 'Akshaya Kosh', gallery: 'Gallery', staff: 'Principal & Staff', management: 'Management Committee', exManagement: 'Ex-Management', exStudents: 'Ex-Students' },
+                sectionTitles: { history: 'Our Rich History', founders: 'Our Founders', martyrs: 'In Memoriam', management: 'Management Committee', exManagement: 'Former Management', staff: 'Principal & Staff', donors: 'Wall of Honor', news: 'School News', creationCorner: 'Creation Corner', akshayaKosh: 'Akshaya Kosh Fund', gallery: 'Gallery', exStudents: 'Ex-Student Batches', highlights: 'Why Choose Us?', successStories: 'Success Stories', teamPreview: 'Leadership & Faculty', bestPractices: 'Best Practices' },
+                hero: { title: 'Welcome to Argal Secondary School', subtitle: "Empowering the future generation through quality education.", cta: "View Latest News" },
+                footer: { about: "About Us", contact: "Contact Info", connect: "Connect With Us", rights: "All rights reserved.", importantLinks: "Important Links", designedBy: "Designed by" },
+                common: { viewFullList: "View Full List", noticeTitle: "NOTICE" }
+            },
+            np: {
+                nav: { home: 'गृहपृष्ठ', team: 'हाम्रो टोली', history: 'इतिहास', founders: 'संस्थापकहरु', martyrs: 'सहिद पाना', news: 'समाचार', creationCorner: 'सिर्जना कुना', donors: 'सम्मान स्तम्भ', akshayaKosh: 'अक्षय कोष', gallery: 'ग्यालरी', staff: 'प्रधानाध्यापक र कर्मचारी', management: 'व्यवस्थापन समिति', exManagement: 'पूर्व व्यवस्थापन समिति', exStudents: 'पूर्व विद्यार्थीहरु' },
+                sectionTitles: { history: 'हाम्रो गौरवमय इतिहास', founders: 'हाम्रा संस्थापकहरु', martyrs: 'भावपूर्ण श्रद्धाञ्जली', management: 'विद्यालय व्यवस्थापन समिति', exManagement: 'पूर्व विद्यालय व्यवस्थापन समितिहरु', staff: 'शिक्षक तथा कर्मचारी', donors: 'चन्दादाता सम्मान', news: 'विद्यालय समाचार', creationCorner: 'सिर्जना कुना', akshayaKosh: 'अक्षय कोष विवरण', gallery: 'फोटो र भिडियो ग्यालरी', exStudents: 'पूर्व विद्यार्थी समूहहरु', highlights: 'हाम्रा विशेषताहरु', successStories: 'सफलताका कथाहरु', teamPreview: 'नेतृत्व र शिक्षकहरू', bestPractices: 'उत्कृष्ट अभ्यासहरू' },
+                hero: { title: 'श्री अर्गल माध्यमिक विद्यालयमा स्वागत छ', subtitle: "गुणस्तरीय शिक्षा र नैतिक मूल्य मार्फत भविष्यका पुस्तालाई सशक्त बनाउँदै।", cta: "ताजा समाचार हेर्नुहोस्" },
+                footer: { about: "हाम्रो बारेमा", contact: "सम्पर्क विवरण", connect: "हामीसँग जोडिनुहोस्", rights: "सर्वाधिकार सुरक्षित।", importantLinks: "महत्वपूर्ण लिङ्कहरू", designedBy: "डिजाइन" },
+                common: { viewFullList: "पूरा सूची हेर्नुहोस्", noticeTitle: "सूचना" }
+            }
+        };
+
+        const NOTICES = [
+            "Admission Open for Grade 11 (Science, Management, and Education streams).",
+            "Parent-Teacher Meeting for Grade 10 scheduled for next Saturday at 11:00 AM.",
+            "Congratulations to the Football Team for winning the District Championship!"
+        ];
+
+        const HISTORY_TEXT = [
+            "Established in 2022 B.S. (1965 A.D.), Argal Secondary School began as a humble initiative...",
+            "Over the decades, the school has weathered many challenges but has always emerged stronger...",
+            "Today, Argal Secondary School stands as a beacon of knowledge."
+        ];
+
+        const MANAGEMENT = [
+            { name: 'Krishna Prasad', designation: 'Chairman', image: 'https://picsum.photos/300/300?random=1' },
+            { name: 'Sita Sharma', designation: 'Principal', image: 'https://picsum.photos/300/300?random=2' },
+            { name: 'Ramesh Thapa', designation: 'Parent Rep', image: 'https://picsum.photos/300/300?random=3' },
+            { name: 'Gita Magar', designation: 'Teacher Rep', image: 'https://picsum.photos/300/300?random=4' }
+        ];
+
+        const STAFF = [
+            { name: 'Sita Sharma', designation: 'Principal', image: 'https://picsum.photos/300/300?random=2' },
+            { name: 'Narayan Dutt', designation: 'Vice Principal', image: 'https://picsum.photos/300/300?random=20' },
+            { name: 'Kamala Gharti', designation: 'Senior Math Teacher', image: 'https://picsum.photos/300/300?random=21' },
+            { name: 'Rajendra KC', designation: 'Science HOD', image: 'https://picsum.photos/300/300?random=22' }
+        ];
+
+        const FOUNDERS = [
+            { name: 'Late Ram Chandra Poudel', history: 'Established the school in 1965.', image: 'https://picsum.photos/300/400?grayscale&random=7' },
+            { name: 'Bishnu Maya Devi', history: 'Donated the first land parcel.', image: 'https://picsum.photos/300/400?grayscale&random=8' }
+        ];
+
+        const MARTYRS = [
+            { name: 'Late Teacher 1', designation: 'Teacher', desc: 'Sacrificed life for education.', image: 'https://picsum.photos/300/300?grayscale&random=99' },
+            { name: 'Late Teacher 2', designation: 'Teacher', desc: 'We honor your sacrifice.', image: 'https://picsum.photos/300/300?grayscale&random=98' }
+        ];
+
+        const HIGHLIGHTS = [
+            { icon: 'book-open', title: "Modern Library", desc: "Well-stocked library." },
+            { icon: 'cctv', title: "24/7 Security", desc: "Campus monitoring." },
+            { icon: 'monitor-play', title: "Smart Classes", desc: "Digital classrooms." },
+            { icon: 'trophy', title: "Sports", desc: "Spacious playground." }
+        ];
+
+        const BEST_PRACTICES = [
+            { icon: 'sun', title: 'Morning Assembly', desc: 'Starting day with Yoga and Anthem.' },
+            { icon: 'flask-conical', title: 'Practical Science', desc: 'Hands-on lab experiments.' },
+            { icon: 'trophy', title: 'Friday ECA', desc: 'Weekly competitions.' }
+        ];
+
+        const SUCCESS_STORIES = [
+            { name: 'Dr. Ramesh Karki', batch: '2060', achieve: 'Cardiologist', image: 'https://picsum.photos/300/300?random=60' },
+            { name: 'Er. Sarita Thapa', batch: '2062', achieve: 'Civil Engineer', image: 'https://picsum.photos/300/300?random=61' },
+            { name: 'Capt. Binod', batch: '2065', achieve: 'Pilot', image: 'https://picsum.photos/300/300?random=62' }
+        ];
+        
+        const DONORS_TOP = [
+            { name: 'Tarakhola Municipality', amt: 'Rs. 5L', image: '' },
+            { name: 'Helping Hands', amt: 'Rs. 2.5L', image: '' },
+            { name: 'Batch 2050', amt: 'Rs. 1L', image: '' },
+            { name: 'Shiva Kumar', amt: 'Rs. 50k', image: '' },
+            { name: 'Rita Ale', amt: 'Rs. 45k', image: '' }
+        ];
+
+        const GALLERY = [
+            { src: 'https://picsum.photos/400/300?random=30', cap: 'Assembly' },
+            { src: 'https://picsum.photos/400/300?random=31', cap: 'Science Lab' },
+            { src: 'https://picsum.photos/400/300?random=32', cap: 'Dance' },
+            { src: 'https://picsum.photos/400/300?random=33', cap: 'Sports' }
+        ];
+        
+        // =======================
+        // APP STATE
+        // =======================
+        let state = {
+            lang: 'en',
+            view: 'home'
+        };
+
+        // =======================
+        // INITIALIZATION
+        // =======================
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Render Static Content
+            renderMarquee();
+            renderHighlights();
+            renderBestPractices();
+            renderSuccess();
+            renderHistory();
+            renderFounders();
+            renderMartyrs();
+            renderTeamPreview();
+            renderTopDonors();
+            renderGallery();
+            renderManagement();
+            renderStaff();
+            renderNav();
+            
+            // Update Text Language
+            updateLanguage();
+
+            // Fetch Dynamic Content
+            fetchBloggerData(BLOG_URLS.news, 'news', 'news-container', 3, false); // Changed to false
+            // fetchBloggerData for creation corner removed
+            fetchBloggerData(BLOG_URLS.fund, 'Fund', 'funds-container', 3);
+            
+            // Initialize Icons
+            lucide.createIcons();
+            
+            // Generate Stars
+            createStars();
+            
+            // Route Handle
+            handleHashChange();
+            window.addEventListener('hashchange', handleHashChange);
+        });
+
+        // =======================
+        // RENDERING FUNCTIONS
+        // =======================
+        function renderNav() {
+            const t = TRANSLATIONS[state.lang].nav;
+            const desktopHTML = `
+                <a href="#home" class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase">${t.home}</a>
+                <a href="#history" class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase">${t.history}</a>
+                <div class="relative group">
+                    <button class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase flex items-center">${t.team} <i data-lucide="chevron-down" class="ml-1 w-3 h-3"></i></button>
+                    <div class="absolute left-0 w-48 bg-white rounded shadow-lg py-1 hidden group-hover:block text-slate-800">
+                        <a href="#management" class="block px-4 py-2 hover:bg-blue-50">${t.management}</a>
+                        <a href="#staff" class="block px-4 py-2 hover:bg-blue-50">${t.staff}</a>
+                        <a href="#founders" class="block px-4 py-2 hover:bg-blue-50">${t.founders}</a>
+                    </div>
+                </div>
+                <a href="#news" class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase">${t.news}</a>
+                <a href="#donors" class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase">${t.donors}</a>
+                <a href="#gallery" class="hover:bg-blue-800 px-3 py-2 rounded text-sm font-medium uppercase">${t.gallery}</a>
+                <button onclick="toggleLang()" class="ml-2 bg-blue-700 hover:bg-blue-600 px-3 py-1 rounded-full text-xs font-bold border border-blue-500 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3"></i> ${state.lang === 'en' ? 'नेपाली' : 'English'}</button>
+            `;
+            document.getElementById('desktop-menu').innerHTML = desktopHTML;
+
+            const mobileHTML = `
+                <a href="#home" class="block px-3 py-2 text-gray-300 hover:text-white">${t.home}</a>
+                <a href="#management" class="block px-3 py-2 text-gray-300 hover:text-white">${t.management}</a>
+                <a href="#staff" class="block px-3 py-2 text-gray-300 hover:text-white">${t.staff}</a>
+                <a href="#news" class="block px-3 py-2 text-gray-300 hover:text-white">${t.news}</a>
+            `;
+            document.getElementById('mobile-menu-links').innerHTML = mobileHTML;
+        }
+
+        function renderMarquee() {
+            const html = NOTICES.map(n => `<span class="mx-8 text-sm font-medium inline-flex items-center text-slate-700"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 shrink-0"></span>${n}</span>`).join('');
+            document.getElementById('marquee-content').innerHTML = html + html; // Duplicate for smooth loop
+        }
+
+        function renderHighlights() {
+            const html = HIGHLIGHTS.map(h => `
+                <div class="group h-64 perspective-1000">
+                    <div class="relative h-full w-full rounded-xl transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <!-- Front -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-slate-50 shadow-sm border border-slate-100 flex flex-col items-center justify-center p-6 backface-hidden">
+                            <div class="inline-flex items-center justify-center p-5 bg-blue-100 text-blue-600 rounded-full mb-4"><i data-lucide="${h.icon}" class="w-10 h-10"></i></div>
+                            <h3 class="text-xl font-bold text-slate-900">${h.title}</h3>
+                            <div class="mt-4 text-xs text-gray-400 font-medium uppercase tracking-widest">Hover for details</div>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-blue-600 text-white flex flex-col items-center justify-center p-6 text-center rotate-y-180 backface-hidden shadow-xl">
+                            <h3 class="text-lg font-bold mb-3">${h.title}</h3>
+                            <p class="text-sm leading-relaxed opacity-90">${h.desc}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('highlights-container').innerHTML = html;
+        }
+
+        function renderBestPractices() {
+            const html = BEST_PRACTICES.map((p, i) => `
+                <div class="group h-72 w-full max-w-sm perspective-1000">
+                    <div class="relative h-full w-full rounded-xl shadow-lg transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <!-- Front -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-white p-8 border-t-4 border-indigo-500 flex flex-col justify-center backface-hidden">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg"><i data-lucide="${p.icon}" class="w-8 h-8"></i></div>
+                                <h3 class="text-xl font-bold text-slate-800 leading-tight">${p.title}</h3>
+                            </div>
+                            <div class="mt-auto flex items-center text-sm font-semibold text-indigo-600">
+                                <span class="w-8 h-0.5 bg-indigo-300 mr-2"></span> Activity #${i+1}
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-indigo-600 text-white p-8 flex flex-col justify-center items-center text-center rotate-y-180 backface-hidden">
+                            <h3 class="text-lg font-bold mb-4">${p.title}</h3>
+                            <p class="text-indigo-100 leading-relaxed">${p.desc}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('practices-container').innerHTML = html;
+        }
+
+        function renderSuccess() {
+            const html = SUCCESS_STORIES.map(s => `
+                <div class="group h-80 perspective-1000">
+                    <div class="relative h-full w-full rounded-xl shadow-lg transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                         <!-- Front -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-slate-800 overflow-hidden border border-slate-700 backface-hidden">
+                            <div class="h-4/5 w-full"><img src="${s.image}" class="w-full h-full object-cover"></div>
+                            <div class="h-1/5 bg-slate-800 flex items-center justify-center border-t border-slate-700">
+                                <h3 class="text-lg font-bold text-white text-center">${s.name}</h3>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 h-full w-full rounded-xl bg-blue-900/90 text-white px-6 py-8 flex flex-col items-center justify-center text-center rotate-y-180 backface-hidden border border-blue-500">
+                             <h3 class="text-xl font-bold mb-2">${s.name}</h3>
+                             <span class="inline-block bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">Batch ${s.batch}</span>
+                             <p class="text-sm leading-relaxed text-blue-100">${s.achieve}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('success-container').innerHTML = html;
+        }
+
+        function renderHistory() {
+            document.getElementById('history-subtitle').innerText = "Decades of educational excellence in Tarakhola";
+            document.getElementById('history-content').innerHTML = HISTORY_TEXT.map(p => `<p class="mb-4">${p}</p>`).join('');
+        }
+
+        function renderFounders() {
+            const html = FOUNDERS.map((f, i) => `
+                <div class="group h-96 w-full perspective-1000">
+                    <div class="relative h-full w-full rounded-2xl transition-all duration-700 transform-style-3d group-hover:rotate-y-180">
+                         <!-- Front -->
+                         <div class="absolute inset-0 h-full w-full rounded-2xl bg-white shadow-xl flex flex-col items-center justify-center p-8 border-l-8 border-blue-800 backface-hidden">
+                             <div class="relative w-48 h-48 rounded-full overflow-hidden border-4 border-slate-200 shadow-inner mb-6">
+                                <img src="${f.image}" class="w-full h-full object-cover filter grayscale">
+                             </div>
+                             <h3 class="text-2xl font-serif font-bold text-slate-800 mb-2">${f.name}</h3>
+                             <p class="text-sm text-blue-600 font-bold uppercase tracking-widest">Founder</p>
+                         </div>
+                         <!-- Back -->
+                         <div class="absolute inset-0 h-full w-full rounded-2xl bg-blue-900 text-white flex flex-col items-center justify-center p-10 text-center rotate-y-180 backface-hidden shadow-2xl">
+                             <h3 class="text-2xl font-bold mb-6 border-b-2 border-blue-500 pb-2">${f.name}</h3>
+                             <p class="text-lg leading-relaxed italic text-blue-100">"${f.history}"</p>
+                         </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('founders-container').innerHTML = html;
+        }
+
+        function renderMartyrs() {
+            const html = MARTYRS.map(m => `
+                <div class="group h-80 md:h-72 w-full perspective-1000">
+                    <div class="relative h-full w-full rounded-2xl shadow-lg transition-all duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <!-- Front -->
+                        <div class="absolute inset-0 h-full w-full rounded-2xl bg-white overflow-hidden border-t-4 border-red-500 flex backface-hidden">
+                             <div class="w-2/5 h-full relative"><img src="${m.image}" class="w-full h-full object-cover filter grayscale"></div>
+                             <div class="w-3/5 p-6 flex flex-col justify-center text-left">
+                                <h3 class="text-2xl font-bold text-slate-800">${m.name}</h3>
+                                <p class="text-red-600 font-medium uppercase tracking-wider text-sm mb-2">${m.designation}</p>
+                                <p class="text-gray-500 text-xs mt-auto">Martyred in 205X B.S.</p>
+                             </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 h-full w-full rounded-2xl bg-slate-900 text-white p-8 flex flex-col justify-center items-center text-center rotate-y-180 backface-hidden border-b-4 border-red-600">
+                            <i data-lucide="flame" class="w-8 h-8 text-red-500 mb-4 animate-bounce"></i>
+                            <h3 class="text-xl font-bold mb-2">${m.name}</h3>
+                            <p class="text-gray-300 italic leading-relaxed">"${m.desc}"</p>
+                            <div class="mt-4 text-xs text-red-400 font-bold uppercase tracking-widest">In Memoriam</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('martyrs-container').innerHTML = html;
+        }
+
+        function renderTeamPreview() {
+            const p = STAFF.find(s => s.designation === 'Principal');
+            const c = MANAGEMENT.find(m => m.designation === 'Chairman');
+            const leaders = [
+                { data: p, title: "Principal's Message", quote: "Education is not just about academic excellence, but about character building.", link: "#staff", btn: "View All Staff" },
+                { data: c, title: "School Management", quote: "We are committed to providing the best infrastructure and environment.", link: "#management", btn: "View Committee" }
+            ];
+
+            const html = leaders.map(l => `
+                <div class="group h-[500px] w-full perspective-1000">
+                    <div class="relative h-full w-full rounded-2xl transition-all duration-700 transform-style-3d group-hover:rotate-y-180 shadow-lg hover:shadow-2xl">
+                        <!-- Front -->
+                        <div class="absolute inset-0 h-full w-full rounded-2xl bg-white border border-slate-100 flex flex-col items-center justify-center p-8 text-center backface-hidden">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-8">${l.title}</h3>
+                            <div class="w-48 h-48 rounded-full overflow-hidden mb-6 border-4 border-blue-100 shadow-inner">
+                                <img src="${l.data?.image}" class="w-full h-full object-cover">
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900">${l.data?.name}</h4>
+                            <p class="text-blue-600 font-medium mt-2">${l.data?.designation}</p>
+                            <p class="text-xs text-gray-400 mt-4 uppercase tracking-widest">Hover to read message</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="absolute inset-0 h-full w-full rounded-2xl bg-slate-900 text-white flex flex-col items-center justify-center p-10 text-center rotate-y-180 backface-hidden">
+                            <h3 class="text-2xl font-bold mb-6 text-blue-300">${l.data?.name}</h3>
+                            <p class="text-lg text-gray-300 italic mb-8">"${l.quote}"</p>
+                            <a href="${l.link}" class="inline-flex items-center text-slate-900 bg-white hover:bg-blue-100 px-6 py-3 rounded-full font-bold transition-colors shadow-lg">
+                                ${l.btn} <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('team-preview-container').innerHTML = html;
+        }
+
+        // ... (Rest of rendering functions: TopDonors, Gallery, etc. remain unchanged) ...
+
+        function renderTopDonors() {
+            const html = DONORS_TOP.map(d => `
+                <div class="flex flex-col items-center text-center p-4 bg-slate-50 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center mb-2 overflow-hidden">
+                        ${d.image ? `<img src="${d.image}" class="w-full h-full object-cover">` : `<i data-lucide="user" class="text-slate-400"></i>`}
+                    </div>
+                    <h4 class="font-bold text-sm leading-tight">${d.name}</h4>
+                    <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full mt-1 font-bold">${d.amt}</span>
+                </div>
+            `).join('');
+            document.getElementById('top-donors-container').innerHTML = html;
+        }
+
+        function renderGallery() {
+            const items = [...GALLERY, ...GALLERY].map(g => `
+                <div class="inline-block w-72 h-48 mx-2 relative group rounded-lg overflow-hidden">
+                    <img src="${g.src}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white font-bold text-sm">
+                        ${g.cap}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('gallery-marquee').innerHTML = items;
+        }
+        
+        function renderManagement() {
+             const html = MANAGEMENT.map(m => `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden text-center group">
+                    <div class="h-64 overflow-hidden"><img src="${m.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">${m.name}</h3>
+                        <p class="text-blue-600 font-medium">${m.designation}</p>
+                    </div>
+                </div>
+             `).join('');
+             document.getElementById('management-container').innerHTML = html;
+        }
+
+        function renderStaff() {
+             const html = STAFF.map(s => `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden text-center group">
+                    <div class="h-64 overflow-hidden"><img src="${s.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">${s.name}</h3>
+                        <p class="text-blue-600 font-medium">${s.designation}</p>
+                    </div>
+                </div>
+             `).join('');
+             document.getElementById('staff-container').innerHTML = html;
+        }
+
+        // ... (Rest of JS: Fetch logic, Utils) ...
+        async function fetchBloggerData(url, label, containerId, max = 3, showImage = true) {
+            // Use Mocks for Demo if URL is placeholder
+            if(url.includes('your-school')) {
+                 renderMockData(label, containerId, showImage);
+                 return;
+            }
+
+            try {
+                // Blogger JSON Feed URL Construction
+                let feedUrl = `${new URL(url).origin}/feeds/posts/default/-/${label}?alt=json&max-results=${max}`;
+                const res = await fetch(feedUrl);
+                const data = await res.json();
+                const posts = data.feed.entry.map(e => {
+                     let thumb = null;
+                     if (e.media$thumbnail && e.media$thumbnail.url) {
+                        thumb = e.media$thumbnail.url.replace('s72-c', 'w400-h300-c');
+                     } else if (e.content && e.content.$t) {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(e.content.$t, 'text/html');
+                        const img = doc.querySelector('img');
+                        if(img) thumb = img.src;
+                     }
+                     
+                     const link = e.link.find(l => l.rel === 'alternate').href;
+                     const summary = e.content ? e.content.$t.replace(/<[^>]+>/g, '').substring(0, 100) + '...' : '';
+                     return { title: e.title.$t, thumb, link, summary, date: e.published.$t.substring(0,10) };
+                });
+                renderPosts(posts, containerId, showImage);
+            } catch (e) {
+                renderMockData(label, containerId, showImage);
+            }
+        }
+
+        function renderPosts(posts, containerId, showImage) {
+            const isCreative = containerId === 'creative-container';
+            const html = posts.map(p => {
+                if(isCreative) {
+                    return `
+                      <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-stone-100 flex flex-col h-full">
+                        <div class="p-3 pb-0">
+                          <div class="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-100">
+                            ${p.thumb ? `<img src="${p.thumb}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter saturate-75 group-hover:saturate-100">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-100 to-blue-100 text-purple-300"><i data-lucide="palette" class="w-16 h-16 opacity-50"></i></div>`}
+                             <div class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide shadow-sm">Creative</div>
+                          </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                          <div class="mb-2 flex items-center text-slate-400 text-xs font-medium">${p.date}</div>
+                          <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-purple-700 transition-colors line-clamp-2 leading-tight">${p.title}</h3>
+                          <p class="text-slate-500 text-sm line-clamp-3 mb-4 flex-1 font-light leading-relaxed">${p.summary}</p>
+                          <div class="pt-4 border-t border-slate-100 flex items-center text-purple-600 font-medium text-sm group/btn">
+                            Read Full Story <i data-lucide="arrow-right" class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                          </div>
+                        </div>
+                      </a>
+                    `;
+                } else {
+                    return `
+                        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-slate-200 flex flex-col h-full transform hover:-translate-y-1">
+                             <div class="relative h-48 overflow-hidden">
+                                ${showImage ? (p.thumb ? `
+                                    <img src="${p.thumb}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                                ` : `
+                                   <div class="bg-gradient-to-br from-blue-500 to-indigo-600 w-full h-full flex items-center justify-center"><i data-lucide="newspaper" class="w-12 h-12 text-white opacity-50"></i></div>
+                                `) : ''}
+                                ${!showImage ? `<div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">News</div>` : ''}
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <div class="flex items-center text-gray-500 text-xs mb-3 font-medium"><i data-lucide="calendar" class="w-3 h-3 mr-1"></i> ${p.date}</div>
+                                <a href="${p.link}" target="_blank" class="font-bold text-lg mb-2 hover:text-blue-600 line-clamp-2 leading-snug">${p.title}</a>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">${p.summary}</p>
+                                <a href="${p.link}" target="_blank" class="text-blue-600 font-semibold text-sm hover:underline mt-auto flex items-center pt-3 border-t border-slate-100">Read More <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i></a>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+            document.getElementById(containerId).innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function renderMockData(type, containerId, showImage) {
+             const mocks = Array(3).fill(0).map((_, i) => ({
+                 title: type === 'news' ? `School Update ${i+1}: Exciting Event` : `Creative Work ${i+1}: Art`,
+                 thumb: `https://picsum.photos/400/300?random=${i*10 + type.length}`,
+                 link: '#',
+                 summary: 'This is a sample summary of the post content to demonstrate layout...',
+                 date: '2024-05-15'
+             }));
+             renderPosts(mocks, containerId, showImage);
+        }
+
+        function toggleLang() {
+            state.lang = state.lang === 'en' ? 'np' : 'en';
+            renderNav();
+            updateLanguage();
+            lucide.createIcons();
+        }
+
+        function updateLanguage() {
+            const t = TRANSLATIONS[state.lang];
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const keys = el.dataset.t.split('.');
+                let val = t;
+                keys.forEach(k => val = val[k]);
+                if(val) el.innerText = val;
+            });
+        }
+        
+        // ... (Toggle Element, Hash Change, Stars, etc. same) ...
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('hidden');
+            if(!el.classList.contains('hidden') && el.innerHTML.trim().length < 100) {
+                 if (id === 'donor-sheet') {
+                    el.innerHTML = `<iframe src="${SHEET_URLS.donors}" class="w-full h-full border-0"></iframe>`;
+                 } else if (id === 'creative-frame-container') {
+                    el.innerHTML = `<div class="bg-slate-900 text-white py-2 px-4 text-xs flex justify-between items-center"><span>Live Preview: Creation Corner</span><a href="${BLOG_URLS.creative}" target="_blank" class="hover:text-purple-300 flex items-center">Open External <i data-lucide="external-link" class="ml-1 w-3 h-3"></i></a></div><iframe src="${BLOG_URLS.creative}" class="w-full h-full border-0 bg-white"></iframe>`;
+                    lucide.createIcons();
+                 } else if (id === 'ex-students-frame') {
+                    el.querySelector('.bg-white').innerHTML = `
+                        <div class="bg-slate-100 px-4 py-2 border-b flex justify-between items-center text-sm text-gray-500 rounded-t-lg h-10">
+                            <span>Source: Student Records Archive</span>
+                            <a href="${SHEET_URLS.exStudents}" target="_blank" class="hover:text-blue-600 flex items-center gap-1">Open <i data-lucide="external-link" class="w-3 h-3"></i></a>
+                        </div>
+                        <iframe src="${SHEET_URLS.exStudents}" class="w-full h-[calc(100%-40px)] border-0 bg-gray-50 rounded-b-lg"></iframe>
+                    `;
+                    lucide.createIcons();
+                 }
+            }
+            
+            if(id === 'creative-frame-container') {
+               const btn = document.getElementById('creative-btn');
+               const isHidden = el.classList.contains('hidden');
+               if(btn) {
+                   if(isHidden) {
+                       btn.className = "group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 hover:from-purple-500 hover:via-pink-500 hover:to-red-400 ring-2 ring-purple-400 ring-offset-2";
+                       btn.innerHTML = `<i data-lucide="sparkles" class="mr-2 h-5 w-5 animate-pulse"></i> Open Creative Frame`;
+                   } else {
+                       btn.className = "group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-slate-800 hover:bg-slate-700 ring-2 ring-slate-800 ring-offset-2";
+                       btn.innerHTML = `<i data-lucide="x" class="mr-2 h-5 w-5 transition-transform group-hover:rotate-90"></i> Close Preview`;
+                   }
+                   lucide.createIcons();
+               }
+            }
+            
+            if(id === 'ex-students-frame') {
+               const btn = document.getElementById('ex-students-btn');
+               const isHidden = el.classList.contains('hidden');
+               if(btn) {
+                   if(isHidden) {
+                       btn.className = "group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-400 hover:from-blue-600 hover:via-cyan-600 hover:to-teal-500 ring-2 ring-cyan-400 ring-offset-2";
+                       btn.innerHTML = `<i data-lucide="database" class="mr-2 h-5 w-5 animate-bounce"></i> View Records Archive <i data-lucide="chevron-down" class="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform"></i>`;
+                   } else {
+                       btn.className = "group relative inline-flex items-center justify-center px-8 py-3 text-base font-bold text-white transition-all duration-300 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 bg-slate-900 hover:bg-slate-800 ring-2 ring-slate-700 ring-offset-2";
+                       btn.innerHTML = `Hide Records <i data-lucide="chevron-up" class="ml-2 w-5 h-5"></i>`;
+                   }
+                   lucide.createIcons();
+               }
+            }
+        }
+
+        function handleHashChange() {
+            const hash = window.location.hash;
+            const views = ['home', 'management', 'staff', 'ex-management'];
+            let activeView = 'home';
+            
+            if(hash === '#management') activeView = 'management';
+            else if(hash === '#staff') activeView = 'staff';
+            else if(hash === '#ex-management') activeView = 'ex-management';
+
+            views.forEach(v => {
+                 const el = document.getElementById(`view-${v}`);
+                 if(el) {
+                     if(v === activeView) {
+                         el.classList.remove('hidden');
+                         window.scrollTo(0, 0);
+                     } else {
+                         el.classList.add('hidden');
+                     }
+                 }
+            });
+
+            if(activeView === 'home' && hash && hash !== '#home') {
+                 const target = document.querySelector(hash);
+                 if(target) {
+                      setTimeout(() => {
+                           const offset = 80;
+                           const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                           window.scrollTo({top, behavior: 'smooth'});
+                      }, 50);
+                 }
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('universe-bg');
+            for(let i=0; i<50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+                star.style.setProperty('--opacity', Math.random() * 0.7 + 0.3);
+                container.appendChild(star);
+            }
+        }
+        
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+    </script>
+</body>
+</html>
